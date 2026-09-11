@@ -3,6 +3,9 @@ Practicas de C++ por Niveles
 # Prácticas de Estructuras de Datos
 
 Repositorio destinado al desarrollo y documentación de prácticas sobre fundamentos de programación y estructuras de datos en C++.
+Alumno Maximino Lopez Garcia Grupo 3SS
+
+
 
 ---
 
