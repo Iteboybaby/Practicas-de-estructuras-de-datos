@@ -1,6 +1,6 @@
 #include <iostream>
 #include <string>
-#include <limits> // Necesario para limpiar el buffer de entrada
+#include <limits>
 
 using namespace std;
 
@@ -8,7 +8,7 @@ int main() {
     int opcion;
 
     do {
-        // Mostrar el menú exacto solicitado
+        // Menú principal
         cout << "\n=== SISTEMA DE CALIFICACIONES ===" << endl;
         cout << "1. Registrar estudiante" << endl;
         cout << "2. Ver informacion del programa" << endl;
@@ -20,8 +20,16 @@ int main() {
             case 1: {
                 string nombre;
                 int edad;
-                float calificacion1, calificacion2, calificacion3;
-                float promedio;
+                int num_calificaciones;
+                float calificacion;
+                float suma = 0, promedio = 0;
+                
+                // Variables para encontrar máxima, mínima y contar aprobadas/reprobadas
+                float maxima = -1.0; 
+                float minima = 11.0;
+                int aprobadas = 0;
+                int reprobadas = 0;
+                bool error = false; // Bandera para controlar si hay una calificación inválida
 
                 // Limpiar el buffer antes de usar getline
                 cin.ignore(numeric_limits<streamsize>::max(), '\n');
@@ -36,28 +44,51 @@ int main() {
                     break;
                 }
 
-                cout << "Calificacion 1: ";
-                cin >> calificacion1;
-                if (calificacion1 < 0 || calificacion1 > 10) {
-                    cout << "Calificacion invalida. Cancelando registro..." << endl;
+                // Pregunta dinámica
+                cout << "Cuantas calificaciones deseas registrar? ";
+                cin >> num_calificaciones;
+
+                if (num_calificaciones <= 0) {
+                    cout << "Cantidad invalida. Cancelando registro..." << endl;
                     break;
                 }
 
-                cout << "Calificacion 2: ";
-                cin >> calificacion2;
-                if (calificacion2 < 0 || calificacion2 > 10) {
-                    cout << "Calificacion invalida. Cancelando registro..." << endl;
+                // Ciclo FOR para n calificaciones
+                for (int i = 1; i <= num_calificaciones; i++) {
+                    cout << "Calificacion " << i << ": ";
+                    cin >> calificacion;
+
+                    if (calificacion < 0 || calificacion > 10) {
+                        cout << "Calificacion invalida. Cancelando registro..." << endl;
+                        error = true;
+                        break; // Rompe el ciclo for
+                    }
+
+                    // Acumular la suma
+                    suma += calificacion;
+
+                    // Contar aprobadas y reprobadas (asumiendo >= 6 como aprobatorio)
+                    if (calificacion >= 6) {
+                        aprobadas++;
+                    } else {
+                        reprobadas++;
+                    }
+
+                    // Encontrar la calificación más alta y más baja sin arreglos
+                    if (calificacion > maxima) {
+                        maxima = calificacion;
+                    }
+                    if (calificacion < minima) {
+                        minima = calificacion;
+                    }
+                }
+
+                // Si hubo un error en las calificaciones, salimos del case 1
+                if (error) {
                     break;
                 }
 
-                cout << "Calificacion 3: ";
-                cin >> calificacion3;
-                if (calificacion3 < 0 || calificacion3 > 10) {
-                    cout << "Calificacion invalida. Cancelando registro..." << endl;
-                    break;
-                }
-
-                promedio = (calificacion1 + calificacion2 + calificacion3) / 3;
+                promedio = suma / num_calificaciones;
 
                 string estado;
                 if (promedio >= 9) {
@@ -70,18 +101,23 @@ int main() {
                     estado = "REPROBADO";
                 }
 
+                // Resumen actualizado
                 cout << "\nResumen del estudiante" << endl;
                 cout << "Nombre: " << nombre << endl;
                 cout << "Edad: " << edad << endl;
                 cout << "Promedio: " << promedio << endl;
                 cout << "Estado: " << estado << endl;
+                cout << "Calificacion mas alta: " << maxima << endl;
+                cout << "Calificacion mas baja: " << minima << endl;
+                cout << "Calificaciones aprobatorias: " << aprobadas << endl;
+                cout << "Calificaciones reprobatorias: " << reprobadas << endl;
                 break;
             }
             case 2:
                 cout << "\n--- Informacion del programa ---" << endl;
                 cout << "Este programa permite registrar a un estudiante," << endl;
-                cout << "calcular su promedio en base a 3 calificaciones," << endl;
-                cout << "y determinar su estado academico." << endl;
+                cout << "calcular su promedio en base a 'n' calificaciones usando ciclos," << endl;
+                cout << "y determinar su estado academico junto con estadisticas de sus notas." << endl;
                 break;
             case 3:
                 cout << "\nSaliendo del programa..." << endl;
