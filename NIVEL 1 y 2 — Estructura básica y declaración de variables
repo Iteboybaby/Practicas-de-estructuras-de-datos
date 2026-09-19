@@ -8,11 +8,12 @@ int main() {
     int opcion;
 
     do {
-        // Mostrar el menú
-        cout << "\n========== MENU PRINCIPAL ==========" << endl;
-        cout << "1. Ingresar calificaciones del StudyBoy" << endl;
-        cout << "2. Salir" << endl;
-        cout << "Elige una accion (1-2): ";
+        // Mostrar el menú exacto solicitado
+        cout << "\n=== SISTEMA DE CALIFICACIONES ===" << endl;
+        cout << "1. Registrar estudiante" << endl;
+        cout << "2. Ver informacion del programa" << endl;
+        cout << "3. Salir" << endl;
+        cout << "Opcion: ";
         cin >> opcion;
 
         switch (opcion) {
@@ -31,28 +32,28 @@ int main() {
                 cout << "Edad: ";
                 cin >> edad;
                 if (edad < 0 || edad > 120) {
-                    cout << "Edad invalida. Regresando al menu principal..." << endl;
+                    cout << "Edad invalida. Cancelando registro..." << endl;
                     break;
                 }
 
                 cout << "Calificacion 1: ";
                 cin >> calificacion1;
                 if (calificacion1 < 0 || calificacion1 > 10) {
-                    cout << "Calificacion invalida. Regresando al menu principal..." << endl;
+                    cout << "Calificacion invalida. Cancelando registro..." << endl;
                     break;
                 }
 
                 cout << "Calificacion 2: ";
                 cin >> calificacion2;
                 if (calificacion2 < 0 || calificacion2 > 10) {
-                    cout << "Calificacion invalida. Regresando al menu principal..." << endl;
+                    cout << "Calificacion invalida. Cancelando registro..." << endl;
                     break;
                 }
 
                 cout << "Calificacion 3: ";
                 cin >> calificacion3;
                 if (calificacion3 < 0 || calificacion3 > 10) {
-                    cout << "Calificacion invalida. Regresando al menu principal..." << endl;
+                    cout << "Calificacion invalida. Cancelando registro..." << endl;
                     break;
                 }
 
@@ -69,7 +70,7 @@ int main() {
                     estado = "REPROBADO";
                 }
 
-                cout << "\n--- Resumen del estudiante ---" << endl;
+                cout << "\nResumen del estudiante" << endl;
                 cout << "Nombre: " << nombre << endl;
                 cout << "Edad: " << edad << endl;
                 cout << "Promedio: " << promedio << endl;
@@ -77,12 +78,18 @@ int main() {
                 break;
             }
             case 2:
+                cout << "\n--- Informacion del programa ---" << endl;
+                cout << "Este programa permite registrar a un estudiante," << endl;
+                cout << "calcular su promedio en base a 3 calificaciones," << endl;
+                cout << "y determinar su estado academico." << endl;
+                break;
+            case 3:
                 cout << "\nSaliendo del programa..." << endl;
                 break;
             default:
-                cout << "\nOpcion invalida. Por favor, intenta de nuevo." << endl;
+                cout << "\nOpcion invalida. Por favor, selecciona una opcion del 1 al 3." << endl;
         }
-    } while (opcion != 2);
+    } while (opcion != 3);
 
     return 0;
 }
