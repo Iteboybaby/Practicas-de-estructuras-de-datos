@@ -1,61 +1,88 @@
 #include <iostream>
 #include <string>
-using namespace std;   
+#include <limits> // Necesario para limpiar el buffer de entrada
+
+using namespace std;
 
 int main() {
-    string nombre;
-    int edad;
-    float calificacion1, calificacion2, calificacion3;
-    float promedio;
+    int opcion;
 
-    cout << "Nombre del estudiante: ";
-    getline(cin, nombre);
-    cout << "Edad: ";
-    cin >> edad;
-    if (edad < 0 || edad > 120) {
-        cout << "Edad invalida" << endl;
-        return 1;
-    }
+    do {
+        // Mostrar el menú
+        cout << "\n========== MENU PRINCIPAL ==========" << endl;
+        cout << "1. Ingresar calificaciones del StudyBoy" << endl;
+        cout << "2. Salir" << endl;
+        cout << "Elige una accion (1-2): ";
+        cin >> opcion;
 
-    cout << "Calificacion 1: ";
-    cin >> calificacion1;
-    if (calificacion1 < 0 || calificacion1 > 10) {
-        cout << "Calificacion invalida" << endl;
-        return 1;
-    }
+        switch (opcion) {
+            case 1: {
+                string nombre;
+                int edad;
+                float calificacion1, calificacion2, calificacion3;
+                float promedio;
 
-    cout << "Calificacion 2: ";
-    cin >> calificacion2;
-    if (calificacion2 < 0 || calificacion2 > 10) {
-        cout << "Calificacion invalida" << endl;
-        return 1;
-    }
+                // Limpiar el buffer antes de usar getline
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
 
-    cout << "Calificacion 3: ";
-    cin >> calificacion3;
-    if (calificacion3 < 0 || calificacion3 > 10) {
-        cout << "Calificacion invalida" << endl;
-        return 1;
-    }
+                cout << "\nNombre del estudiante: ";
+                getline(cin, nombre);
+                
+                cout << "Edad: ";
+                cin >> edad;
+                if (edad < 0 || edad > 120) {
+                    cout << "Edad invalida. Regresando al menu principal..." << endl;
+                    break;
+                }
 
-    promedio = (calificacion1 + calificacion2 + calificacion3) / 3;
+                cout << "Calificacion 1: ";
+                cin >> calificacion1;
+                if (calificacion1 < 0 || calificacion1 > 10) {
+                    cout << "Calificacion invalida. Regresando al menu principal..." << endl;
+                    break;
+                }
 
-    string estado;
-    if (promedio >= 9) {
-        estado = "EXCELENTE";
-    } else if (promedio >= 7) {
-        estado = "APROBADO";
-    } else if (promedio >= 6) {
-        estado = "REGULAR (aprobado con lo minimo)";
-    } else {
-        estado = "REPROBADO";
-    }
+                cout << "Calificacion 2: ";
+                cin >> calificacion2;
+                if (calificacion2 < 0 || calificacion2 > 10) {
+                    cout << "Calificacion invalida. Regresando al menu principal..." << endl;
+                    break;
+                }
 
-    cout << "\nResumen del estudiante" << endl;
-    cout << "Nombre: " << nombre << endl;
-    cout << "Edad: " << edad << endl;
-    cout << "Promedio: " << promedio << endl;
-    cout << "Estado: " << estado << endl;
+                cout << "Calificacion 3: ";
+                cin >> calificacion3;
+                if (calificacion3 < 0 || calificacion3 > 10) {
+                    cout << "Calificacion invalida. Regresando al menu principal..." << endl;
+                    break;
+                }
+
+                promedio = (calificacion1 + calificacion2 + calificacion3) / 3;
+
+                string estado;
+                if (promedio >= 9) {
+                    estado = "EXCELENTE";
+                } else if (promedio >= 7) {
+                    estado = "APROBADO";
+                } else if (promedio >= 6) {
+                    estado = "REGULAR (aprobado con lo minimo)";
+                } else {
+                    estado = "REPROBADO";
+                }
+
+                cout << "\n--- Resumen del estudiante ---" << endl;
+                cout << "Nombre: " << nombre << endl;
+                cout << "Edad: " << edad << endl;
+                cout << "Promedio: " << promedio << endl;
+                cout << "Estado: " << estado << endl;
+                break;
+            }
+            case 2:
+                cout << "\nSaliendo del programa..." << endl;
+                break;
+            default:
+                cout << "\nOpcion invalida. Por favor, intenta de nuevo." << endl;
+        }
+    } while (opcion != 2);
 
     return 0;
 }
