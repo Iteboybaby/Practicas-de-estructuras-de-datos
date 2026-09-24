@@ -8,16 +8,25 @@ int main() {
     int opcion;
 
     do {
-        // Menú principal
-        cout << "\n=== SISTEMA DE CALIFICACIONES ===" << endl;
-        cout << "1. Registrar estudiante" << endl;
-        cout << "2. Ver informacion del programa" << endl;
-        cout << "3. Salir" << endl;
-        cout << "Opcion: ";
-        cin >> opcion;
+        // 1. Ciclo do-while exclusivo para validar el input del menu
+        do {
+            cout << "\n=== SISTEMA DE CALIFICACIONES ===" << endl;
+            cout << "1. Registrar estudiante" << endl;
+            cout << "2. Ver informacion del programa" << endl;
+            cout << "3. Salir" << endl;
+            cout << "4. Registrar otro estudiante" << endl;
+            cout << "Opcion: ";
+            cin >> opcion;
 
+            if (opcion < 1 || opcion > 4) {
+                cout << "\nOpcion invalida. Por favor, selecciona una opcion del 1 al 4." << endl;
+            }
+        } while (opcion < 1 || opcion > 4);
+
+        // Se evalua la opcion ya validada
         switch (opcion) {
-            case 1: {
+            case 1:
+            case 4: { // 2. Ambas opciones ejecutan el registro del estudiante
                 string nombre;
                 int edad;
                 int num_calificaciones;
@@ -117,8 +126,6 @@ int main() {
             case 3:
                 cout << "\nSaliendo del programa..." << endl;
                 break;
-            default:
-                cout << "\nOpcion invalida. Por favor, selecciona una opcion del 1 al 3." << endl;
         }
     } while (opcion != 3);
 
