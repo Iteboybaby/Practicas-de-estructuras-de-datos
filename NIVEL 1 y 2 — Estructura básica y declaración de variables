@@ -29,7 +29,6 @@ int main() {
                 float minima = 11.0;
                 int aprobadas = 0;
                 int reprobadas = 0;
-                bool error = false; // Bandera para controlar si hay una calificación inválida
 
                 // Limpiar el buffer antes de usar getline
                 cin.ignore(numeric_limits<streamsize>::max(), '\n');
@@ -39,9 +38,10 @@ int main() {
                 
                 cout << "Edad: ";
                 cin >> edad;
-                if (edad < 0 || edad > 120) {
-                    cout << "Edad invalida. Cancelando registro..." << endl;
-                    break;
+                // Ciclo while para validar la edad
+                while (edad < 0 || edad > 120) {
+                    cout << "Edad invalida. Vuelve a ingresar una edad valida (0-120): ";
+                    cin >> edad;
                 }
 
                 // Pregunta dinámica
@@ -58,10 +58,10 @@ int main() {
                     cout << "Calificacion " << i << ": ";
                     cin >> calificacion;
 
-                    if (calificacion < 0 || calificacion > 10) {
-                        cout << "Calificacion invalida. Cancelando registro..." << endl;
-                        error = true;
-                        break; // Rompe el ciclo for
+                    // Ciclo while para validar cada calificación
+                    while (calificacion < 0 || calificacion > 10) {
+                        cout << "Calificacion invalida. Vuelve a ingresar la calificacion " << i << " (0-10): ";
+                        cin >> calificacion;
                     }
 
                     // Acumular la suma
@@ -81,11 +81,6 @@ int main() {
                     if (calificacion < minima) {
                         minima = calificacion;
                     }
-                }
-
-                // Si hubo un error en las calificaciones, salimos del case 1
-                if (error) {
-                    break;
                 }
 
                 promedio = suma / num_calificaciones;
