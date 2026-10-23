@@ -1,4 +1,4 @@
-
+//Creacion Juego del GATO//
 #include <stdio.h>
  
 /* Muestra el tablero */
