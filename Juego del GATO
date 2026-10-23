@@ -1,1 +1,89 @@
 
+#include <stdio.h>
+ 
+/* Muestra el tablero */
+void mostrarTablero(char t[3][3]) {
+    printf("\n    1   2   3\n");
+    for (int i = 0; i < 3; i++) {
+        printf("%d   %c | %c | %c\n", i + 1, t[i][0], t[i][1], t[i][2]);
+        if (i < 2) printf("   ---+---+---\n");
+    }
+    printf("\n");
+}
+ 
+/* Revisa 3 filas, 3 columnas y 2 diagonales */
+int hayGanador(char t[3][3], char j) {
+    for (int i = 0; i < 3; i++) {
+        if (t[i][0] == j && t[i][1] == j && t[i][2] == j) return 1; /* fila */
+        if (t[0][i] == j && t[1][i] == j && t[2][i] == j) return 1; /* columna */
+    }
+    if (t[0][0] == j && t[1][1] == j && t[2][2] == j) return 1;     /* diagonal 1 */
+    if (t[0][2] == j && t[1][1] == j && t[2][0] == j) return 1;     /* diagonal 2 */
+    return 0;
+}
+ 
+/* Hay empate si no queda ninguna casilla vacía */
+int hayEmpate(char t[3][3]) {
+    for (int i = 0; i < 3; i++)
+        for (int k = 0; k < 3; k++)
+            if (t[i][k] == ' ') return 0;
+    return 1;
+}
+ 
+int main() {
+    char tablero[3][3];
+    char jugador = 'X';
+    int fila, columna, terminado = 0;
+ 
+    /* Crear el tablero vacío */
+    for (int i = 0; i < 3; i++)
+        for (int k = 0; k < 3; k++)
+            tablero[i][k] = ' ';
+ 
+    /* Ciclo principal del juego */
+    while (!terminado) {
+        mostrarTablero(tablero);
+ 
+        /* Pedir la jugada hasta que sea válida */
+        int valida = 0;
+        while (!valida) {
+            printf("Turno de %c (fila columna): ", jugador);
+ 
+            /* Si no escribió dos números, limpiar la entrada y repetir */
+            if (scanf("%d %d", &fila, &columna) != 2) {
+                int c;
+                while ((c = getchar()) != '\n' && c != EOF);
+                if (c == EOF) return 0;   /* fin de la entrada */
+                printf("Entrada invalida.\n");
+            }
+            /* Validar que esté dentro del tablero */
+            else if (fila < 1 || fila > 3 || columna < 1 || columna > 3) {
+                printf("Fuera del tablero (usa 1 a 3).\n");
+            }
+            /* Validar que la casilla esté libre */
+            else if (tablero[fila - 1][columna - 1] != ' ') {
+                printf("Casilla ocupada usa otra.\n");
+            }
+            /* Jugada válida: se registra */
+            else {
+                tablero[fila - 1][columna - 1] = jugador;
+                valida = 1;
+            }
+        }
+ 
+        /* Revisar si terminó la partida */
+        if (hayGanador(tablero, jugador)) {
+            mostrarTablero(tablero);
+            printf("Gana %c!\n", jugador);
+            terminado = 1;
+        } else if (hayEmpate(tablero)) {
+            mostrarTablero(tablero);
+            printf("Empate Ni uno Gana!\n");
+            terminado = 1;
+        } else {
+            /* Cambiar de turno */
+            jugador = (jugador == 'X') ? 'O' : 'X';
+        }
+    }
+    return 0;
+}
